@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product Details</title>
+  <link rel="stylesheet" href="./home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <style>
+    /* small overrides for the details layout */
+    .detail-wrap{ max-width:1000px; margin:40px auto; display:flex; gap:24px; align-items:flex-start; padding:20px; }
+    .detail-img{ flex:1 1 420px; background:#fff;border-radius:14px;padding:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+    .detail-img img{ width:100%; height:100%; object-fit:contain; }
+    .detail-info{ flex:1 1 420px; background:#fff;border-radius:14px;padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.06); }
+    .detail-info h1{ margin-bottom:12px; font-size:28px; }
+    .detail-info .price{ font-size:24px; color:#16a34a; font-weight:700; margin-bottom:16px; }
+    .detail-info p{ color:#333; line-height:1.5; }
+    .detail-actions{ margin-top:20px; display:flex; gap:12px; }
+    .btn-secondary{ text-decoration:none; padding:10px 14px; border-radius:8px; background:#f0f0f0; color:#000; }
+  </style>
+</head>
+<body>
+  <h1 class="shop_name">GEN_Z SHOP</h1>
+  <ul class="menu">
+    <li><a href="./index.html"><i class="fa-regular fa-house fa-lg"></i></a></li>
+    <li><a href="./women.html">WOMEN</a></li>
+    <li><a href="./men.html">MEN</a></li>
+    <li><a href="./boy.html">BOY</a></li>
+    <li><a href="./girl.html">GIRL</a></li>
+    <li><a href="./details.html">DETAILS</a></li>
+    <li><a href="./login.html">LOGIN</a></li>
+    <li><a href="./register.html">REGISTER</a></li>
+  </ul>
+
+  <div class="detail-wrap" id="product-detail">
+    <div class="detail-img">
+      <img id="product-img" src="./img/shoes01-removebg-preview.png" alt="Product">
+    </div>
+    <div class="detail-info">
+      <h1 id="product-title">Product Title</h1>
+      <div class="price" id="product-price">$0.00</div>
+      <p id="product-desc">Product description will appear here. Replace with actual description passed in the URL (desc=...)</p>
+      <div class="detail-actions">
+        <a class="btn" id="add-cart" href="#" onclick="event.preventDefault()">Add to cart</a>
+        <a class="btn-secondary" href="javascript:history.back()">Back</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // read URL params and populate product detail
+    const params = new URLSearchParams(location.search);
+    const img = params.get('img');
+    const title = params.get('title');
+    const price = params.get('price');
+    const desc = params.get('desc');
+
+    function safeDecode(v){ try{ return v ? decodeURIComponent(v) : v; }catch(e){ return v; } }
+
+    if(img){
+      // normalize path if user passed without leading ./ 
+      const imgPath = img.startsWith('./') || img.startsWith('/') ? img : ('./' + img);
+      document.getElementById('product-img').src = safeDecode(imgPath);
+    }
+    if(title) document.getElementById('product-title').textContent = safeDecode(title);
+    if(price) document.getElementById('product-price').textContent = '$' + safeDecode(price);
+    if(desc) document.getElementById('product-desc').textContent = safeDecode(desc);
+  </script>
+</body>
+</html>
